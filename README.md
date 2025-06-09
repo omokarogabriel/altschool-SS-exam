@@ -41,8 +41,8 @@ git clone https://github.com/omokarogabriel/portfolio.git
 ```
 
 <!-- paste the ip address in the browser -->
-
-_52.87.162.241_
+*The IP address where the web page is hosted*
+- 52.87.162.241
 
 <!-- image of my web page -->
 
