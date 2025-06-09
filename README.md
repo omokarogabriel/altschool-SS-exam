@@ -46,6 +46,7 @@ _52.87.162.241_
 
 <!-- image of my web page -->
 
-```html
+<!-- ```html
 <img src="./exam.png" alt="Diagram" width="400" />
-```
+``` -->
+![MyImage](./exam.png)
