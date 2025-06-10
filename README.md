@@ -96,8 +96,8 @@ git clone https://github.com/omokarogabriel/portfolio.git
 
 ## **Using Ansible to install packages and deploy the git repo into the ec2 server**
 
-**The inventory**
-*It takes in the IP address for the host, and ssh into the ec2 instance using the private key*
+## **The inventory**
+**It takes in the IP address for the host, and ssh into the ec2 instance using the private key**
 ```yml
 webservers:
   hosts:
@@ -106,8 +106,114 @@ webservers:
       ansible_ssh_private_key_file: /home/omokaro/AwsKey
 ```
 
-**The playbook**
-*It runs all the tasks in the role*
+## **The webserver role and default varaibles**
+
+**The default variables**
+```yml
+---
+# defaults file for webserver
+# This file contains default variables for the webserver role.
+# You can override these variables in your playbook or inventory files.
+webserver_packages:
+  - apache2
+  - git
+
+apache_service_name: apache2
+apache_service: 
+  name: "{{ apache_service_name }}"
+  state: started
+  enabled: true  
+```
+
+**The webserver role task**
+```yml
+---
+# tasks file for webserver
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+
+  # Ensure the apt cache is updated before installing packages
+  # This task is only run on Debian-based systems
+  # such as Ubuntu, which is common for web servers.
+  # This task is idempotent, meaning it will not run if the cache is already up to date.
+
+- name: Install web server & packages
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items: "{{ webserver_packages }}"
+  loop:
+    - "{{ webserver_packages }}"
+
+- name: Ensure Apache is running
+  service:
+    name: "{{ apache_service_name }}"
+```
+
+
+## **The git repo role and default variables**
+
+**The default variables**
+```yml
+---
+# defaults file for git-repo
+my_git_repo: 'https://github.com/omokarogabriel/portfolio.git'
+my_git_dest: '/var/www/html/portfolio'
+my_git_version: 'main'
+my_git_update: yes
+my_git_force: yes
+my_new_dest: '/var/www/html'
+```
+
+**The git repo role task**
+```yml
+---
+# tasks file for git-repo
+- name: Ensure git is installed
+  apt:
+    name: git
+    state: present
+  become: true
+
+
+- name: Clone or update web application repo
+  git:
+    repo: '{{ my_git_repo }}'
+    dest: '{{ my_git_dest }}'
+    version: '{{ my_git_version }}'
+    update: '{{ my_git_update }}'
+    force: '{{ my_git_force }}'
+
+- name: Ensure the web application directory and contents have correct permissions
+  file:
+    path: '{{ my_git_dest }}'
+    state: directory
+    recurse: yes
+    mode: '0755'
+    owner: ubuntu
+    group: ubuntu
+  become: true
+
+- name: Move contents from portfolio to html
+  shell: mv {{ my_git_dest }}/* {{ my_new_dest }}
+  args:
+    removes: '{{ my_git_dest }}'
+  become: true
+
+
+- name: Remove empty portfolio directory
+  file:
+    path: '{{ my_git_dest }}'
+    state: absent
+  become: true
+```
+
+
+## **The playbook**
+**It runs all the tasks in the role**
 ```yml
 ---
 - name: Apply webserver role on webservers and deploy git repository
