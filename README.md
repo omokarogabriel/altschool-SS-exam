@@ -62,7 +62,7 @@ aws ec2 run-instances --image-id ami-0fc5d935ebf8bc3bc --instance-type t2.micro 
 _I have successfully ssh into my ec2_
 
 ```bash
-ssh -i AwsKey ubuntu@52.87.162.241
+ssh -i AwsKey ubuntu@52.90.76.179
 ```
 
 _Instaling the packages_
@@ -95,11 +95,24 @@ git clone https://github.com/omokarogabriel/portfolio.git
 
 <!-- paste the ip address in the browser -->
 *The IP address where the web page is hosted*
-- 52.87.162.241
+- 52.90.76.179
 
 <!-- image of my web page -->
 
 <!-- ```html
 <img src="./exam.png" alt="Diagram" width="400" />
 ``` -->
-![MyImage](./exam.png)
+**HOME PAGE**
+![MyHome](./home.png)
+
+<!-- **ABOUT PAGE**
+![MyImage](./about.png) -->
+
+**PROJECT PAGE**
+![MyProjects](./projects.png)
+
+**SERVICE PAGE**
+![MyServices](./services.png)
+
+**CONTACT PAGE**
+![MyContact](./contact.png)
