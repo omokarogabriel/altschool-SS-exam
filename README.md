@@ -94,7 +94,7 @@ git clone https://github.com/omokarogabriel/portfolio.git
 ``` -->
 
 
-## **Using Ansible to install,configure and deploy the git repo**
+## **Using Ansible to install packages and deploy the git repo into the ec2 server**
 
 **The inventory**
 *It takes in the IP address for the host, and ssh into the ec2 instance using the private key*
