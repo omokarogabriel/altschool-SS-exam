@@ -68,14 +68,24 @@ ssh -i AwsKey ubuntu@52.87.162.241
 _Instaling the packages_
 
 ```bash
-sudo apt update # this update the package library
-apt install apache2
-apt enable apache2
-apt start apache2
 
-# to check if apache2 is running
-systemctl status apache2
-# the aws has handled the firwall for us
+# Update package library
+sudo apt update
+
+# Install Apache2 web server
+sudo apt install apache2 -y
+
+# Enable Apache2 to start on boot
+sudo systemctl enable apache2
+
+# Start Apache2 service
+sudo systemctl start apache2
+
+# Check Apache2 service status
+sudo systemctl status apache2
+
+
+# the aws has handled the firwall for us, so we dont need to install or enable ufw
 
 # navigate into the directory
 cd /var/www/html
