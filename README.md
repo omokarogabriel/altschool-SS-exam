@@ -57,7 +57,7 @@ aws ec2 authorize-security-group-ingress --group-id sg-0aa2c7b52d1dff232 --proto
 aws ec2 run-instances --image-id ami-0fc5d935ebf8bc3bc --instance-type t2.micro --key-name AwsKey --subnet-id subnet-0130bb2b3a6b76ab1 --security-group-ids sg-0aa2c7b52d1dff232 --associate-public-ip-address --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=MyServer}]' 
 ```
 
-## **Installing the packages and setting up the server**
+<!-- ## **Installing the packages and setting up the server**
 
 _I have successfully ssh into my ec2_
 
@@ -91,7 +91,37 @@ sudo systemctl status apache2
 cd /var/www/html
 git clone https://github.com/omokarogabriel/portfolio.git
 
+``` -->
+
+
+## **Using Ansible to install,configure and deploy the git repo**
+
+**The inventory**
+*It takes in the IP address for the host, and ssh into the ec2 instance using the private key*
+```yml
+webservers:
+  hosts:
+    52.90.76.179:
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: /home/omokaro/AwsKey
 ```
+
+**The playbook**
+*It runs all the tasks in the role*
+```yml
+---
+- name: Apply webserver role on webservers and deploy git repository
+  hosts: webservers
+  become: yes
+  roles:
+    - webserver
+    - git-repo
+```
+
+
+
+**Below is the repo to the Ansible file**
+[ansible](https://github.com/omokarogabriel/my-first-static-inv-ansible)
 
 <!-- paste the ip address in the browser -->
 *The IP address where the web page is hosted*
