@@ -120,8 +120,8 @@ webservers:
 
 
 
-**Below is the repo to the Ansible file**
-[ansible](https://github.com/omokarogabriel/my-first-static-inv-ansible)
+**Here is the repo to the Ansible file**
+[ansible_file_repo](https://github.com/omokarogabriel/my-first-static-inv-ansible)
 
 <!-- paste the ip address in the browser -->
 *The IP address where the web page is hosted*
