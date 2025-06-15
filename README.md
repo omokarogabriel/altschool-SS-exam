@@ -4,6 +4,9 @@ _This Exam uses the Modern Approach (AWS)_
 
 ## **Setting up the aws infrastructure**
 
+**This Infrastructure uses the aws cli**
+![my-terminal](./aws-configure.png)
+
 **List of resources used for the infrastructure**
 
 - **vpc** (For Creating the isolated network within the cloud, it uses 10.0.0.0/16 cidr block and has total of 256 networks and each networks will have total IP of 254).
